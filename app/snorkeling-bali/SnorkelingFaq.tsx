@@ -52,7 +52,7 @@ export default function SnorkelingFAQ() {
 
   const handleContactWA = () => {
     const text = "Halo, saya punya pertanyaan mengenai paket snorkeling yang tidak ada di daftar FAQ.";
-    window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(text)}`, "_blank");
+    window.open(`https://wa.me/6282339616319?text=${encodeURIComponent(text)}`, "_blank");
   };
 
   return (

@@ -32,7 +32,7 @@ export default function Navbar() {
     { name: "FAQ", href: "#faq" },
   ];
 
-  const whatsappNumber = "6281234567890"; // Ganti dengan nomor WhatsApp resmi Prima Bali Tour
+  const whatsappNumber = "6282339616319"; // 082339616319 Ganti dengan nomor WhatsApp resmi Prima Bali Tour
   const whatsappMessage = encodeURIComponent(
     "Halo Prima Bali Tour, saya ingin bertanya mengenai paket wisata Bali."
   );

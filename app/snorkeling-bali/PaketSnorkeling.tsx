@@ -78,7 +78,7 @@ export default function SnorkelingPackages() {
     const text = `Halo, saya ingin bertanya/booking paket snorkeling: *${packageName}*`;
     const encodedText = encodeURIComponent(text);
     // Ganti nomor WhatsApp berikut sesuai kebutuhan
-    window.open(`https://wa.me/6281234567890?text=${encodedText}`, "_blank");
+    window.open(`https://wa.me/6282339616319?text=${encodedText}`, "_blank");
   };
 
   return (

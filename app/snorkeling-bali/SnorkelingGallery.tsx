@@ -230,7 +230,7 @@ export default function SnorkelingGallery() {
                   <button
                     onClick={() => {
                       const text = `Halo, saya tertarik dengan lokasi snorkeling di *${selectedImage.location}* (${selectedImage.title})`;
-                      window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(text)}`, "_blank");
+                      window.open(`https://wa.me/6282339616319?text=${encodeURIComponent(text)}`, "_blank");
                     }}
                     className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold hover:from-cyan-400 hover:to-teal-400 transition-all text-sm shadow-md"
                   >

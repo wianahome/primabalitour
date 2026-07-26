@@ -5,6 +5,8 @@ import SnorkelingGallery from "./SnorkelingGallery";
 import WhyKami from "./WhyKami";
 import SnorkelingTestimonials from "./SnorkelingTestimoni";
 import SnorkelingFAQ from "./SnorkelingFaq";
+import WhatsAppButton from "../komponen/WhatsAppButton";
+
 
 
 // Metadata untuk SEO
@@ -46,6 +48,10 @@ export default function SnorkelingBaliPage() {
       <WhyKami />
       <SnorkelingTestimonials />
       <SnorkelingFAQ />
+      <WhatsAppButton 
+        phoneNumber="6281999773432" 
+        serviceName="Bali & Nusa Penida Snorkeling" 
+      />
     </main>
   );
 }
