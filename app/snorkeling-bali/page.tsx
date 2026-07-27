@@ -49,7 +49,7 @@ export default function SnorkelingBaliPage() {
       <SnorkelingTestimonials />
       <SnorkelingFAQ />
       <WhatsAppButton 
-        phoneNumber="6281999773432" 
+        phoneNumber="6282339616319" 
         serviceName="Bali & Nusa Penida Snorkeling" 
       />
     </main>
