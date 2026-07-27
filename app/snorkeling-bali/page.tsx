@@ -40,14 +40,30 @@ export default function SnorkelingBaliPage() {
   return (
     <main className="min-h-screen bg-slate-950">
       {/* Hero Section */}
-      <HeroSnorkeling />
+      <section id="hero">
+        <HeroSnorkeling />
+      </section>
 
       {/* Packages Section */}
-      <PaketSnorkeling />
-      <SnorkelingGallery />
-      <WhyKami />
-      <SnorkelingTestimonials />
-      <SnorkelingFAQ />
+      <section id="paket">
+        <PaketSnorkeling />
+      </section>
+
+      <section id="galeri">
+        <SnorkelingGallery />
+      </section>
+
+      <section id="tentang">
+        <WhyKami />
+      </section>
+
+      <section id="testimoni">
+        <SnorkelingTestimonials />
+      </section>
+
+      <section id="faq">
+        <SnorkelingFAQ />
+      </section>
       <WhatsAppButton 
         phoneNumber="6282339616319" 
         serviceName="Bali & Nusa Penida Snorkeling" 
