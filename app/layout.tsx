@@ -39,6 +39,7 @@ export default function RootLayout({
             gtag('config', 'AW-18134268066');
           `}
         </Script>
+
       </head>
       <body className={`${inter.className} bg-slate-950 text-slate-100`}>
         
