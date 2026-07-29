@@ -1,22 +1,59 @@
 'use client';
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 
-// 1. Definisi interface/tipe untuk props
+// 1. Definisi interface/tipe untuk props (Mendukung Multi-Bahasa)
 interface WhatsAppButtonProps {
   phoneNumber?: string;
-  serviceName?: string;
+  lang?: 'id' | 'en' | 'ja';
+  serviceName?: string | { id?: string; en?: string; ja?: string };
   customMessage?: string;
 }
 
 export default function WhatsAppButton({ 
   phoneNumber = "6282339616319", // Format internasional tanpa simbol '+'
+  lang: propLang,
   serviceName = "Layanan Umum", 
   customMessage 
 }: WhatsAppButtonProps) {
-  // Jika customMessage diisi, gunakan itu. Jika tidak, gunakan pesan default berbasis serviceName.
-  const defaultMessage = `Halo, saya ingin bertanya/memesan paket layanan: *${serviceName}*. Bisakah dibantu?`;
-  const finalMessage = customMessage || defaultMessage;
+  const pathname = usePathname();
+
+  // 2. Deteksi bahasa otomatis dari URL path
+  const currentLang: 'id' | 'en' | 'ja' = pathname?.startsWith('/en')
+    ? 'en'
+    : pathname?.startsWith('/ja')
+    ? 'ja'
+    : propLang || 'id';
+
+  // 3. Resolusi Nama Layanan sesuai Bahasa
+  const getServiceName = (): string => {
+    if (typeof serviceName === 'string') return serviceName;
+    return serviceName[currentLang] || serviceName.id || 'Layanan Umum';
+  };
+
+  const activeServiceName = getServiceName();
+
+  // 4. Dictionary Template Pesan & Label Tombol Per Bahasa
+  const translations = {
+    id: {
+      subLabel: "Tanya tentang",
+      defaultMessage: `Halo Prima Bali Tour, saya ingin bertanya/memesan paket layanan: *${activeServiceName}*. Bisakah dibantu?`,
+    },
+    en: {
+      subLabel: "Inquire about",
+      defaultMessage: `Hello Prima Bali Tour, I would like to inquire about/book the service package: *${activeServiceName}*. Could you please help me?`,
+    },
+    ja: {
+      subLabel: "お問い合わせ",
+      defaultMessage: `こんにちは Prima Bali Tour、こちらのパッケージについて問い合わせ/予約したいです: *${activeServiceName}*。ご案内いただけますか？`,
+    },
+  };
+
+  const t = translations[currentLang] || translations.id;
+
+  // Jika customMessage diisi manual, prioritaskan customMessage.
+  const finalMessage = customMessage || t.defaultMessage;
 
   // Mengkodekan pesan agar aman dikirim melalui URL
   const encodedMessage = encodeURIComponent(finalMessage);
@@ -61,8 +98,8 @@ export default function WhatsAppButton({
 
       {/* Label Text */}
       <div className="flex flex-col text-left">
-        <span className="text-xs font-normal opacity-90 leading-tight">Tanya tentang</span>
-        <span className="text-sm font-bold leading-tight max-w-[140px] truncate">{serviceName}</span>
+        <span className="text-xs font-normal opacity-90 leading-tight">{t.subLabel}</span>
+        <span className="text-sm font-bold leading-tight max-w-[140px] truncate">{activeServiceName}</span>
       </div>
     </a>
   );

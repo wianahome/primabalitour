@@ -1,156 +1,290 @@
 "use client";
 
-import React from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { Star, Quote, CheckCircle2, MessageSquare } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Star, ChevronLeft, ChevronRight, Quote, MessageSquare, CheckCircle2 } from "lucide-react";
 
-interface TestimonialItem {
+type TestimonialsProps = {
+  dict?: any;
+  lang?: string;
+};
+
+interface Testimonial {
   id: string;
   name: string;
-  role: string; // misal: "Family Vacation", "Honeymoon Couple", "Corporate Trip"
-  location: string;
+  role: string;
+  origin: string;
   avatar: string;
   rating: number;
-  date: string;
+  packageTaken: string;
   comment: string;
-  tourTaken: string;
+  date: string;
 }
 
-export default function Testimonials() {
-  const testimonials: TestimonialItem[] = [
+export default function SnorkelingTestimonials({ dict, lang }: TestimonialsProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Data Testimonial Multibahasa (ID, EN, JA)
+  const testimonials: Testimonial[] = [
     {
       id: "1",
-      name: "Budi Santoso & Keluarga",
-      role: "Family Vacation",
-      location: "Jakarta",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop",
+      name: "Sarah & David",
+      role:
+        lang === "en"
+          ? "Honeymoon Couple"
+          : lang === "ja"
+          ? "ハネムーンカップル"
+          : "Pasangan Honeymoon",
+      origin:
+        lang === "en"
+          ? "Jakarta, Indonesia"
+          : lang === "ja"
+          ? "ジャカルタ（インドネシア）"
+          : "Jakarta, Indonesia",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300",
       rating: 5,
-      date: "2 Minggu yang lalu",
+      packageTaken: "Nusa Penida Manta Spot",
       comment:
-        "Sangat puas liburan 4 hari 3 malam bersama Prima Bali Tour. Driver Bli Wayan sangat ramah, paham rute bebas macet, dan mobil Innova Reborn-nya sangat bersih. Anak-anak senang sekali pas trip Nusa Penida!",
-      tourTaken: "Custom Family Tour 4D3N",
+        lang === "en"
+          ? "The best experience in Bali! We successfully swam alongside 3 giant Manta Rays at Manta Bay. The guide was extremely patient in helping me as I was quite anxious in open water. The GoPro photos and videos were delivered on the same day and looked crystal clear!"
+          : lang === "ja"
+          ? "バリ島で最高のエクスペリエンスでした！マンタベイで3匹の巨大マンタと一緒に泳ぐことができました。海に入るのが少し不安だったのですが、ガイドさんがとても親切にサポートしてくれました。GoProで撮影した写真や動画も当日に送られてきて、とても鮮明でした！"
+          : "Pengalaman terbaik selama di Bali! Kita berhasil berenang bareng 3 pari manta raksasa di Manta Bay. Pemandunya sabar banget ngarahin aku yang awalnya agak cemas di laut. Foto dan video GoPro-nya dikirim hari itu juga dan hasilnya jernih banget!",
+      date:
+        lang === "en" ? "May 2026" : lang === "ja" ? "2026年5月" : "Mei 2026",
     },
     {
       id: "2",
-      name: "Clara & David",
-      role: "Honeymoon Trip",
-      location: "Surabaya",
-      avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop",
+      name: "Michael Chen",
+      role:
+        lang === "en"
+          ? "Solo Traveler"
+          : lang === "ja"
+          ? "一人旅"
+          : "Solo Traveler",
+      origin:
+        lang === "en" ? "Singapore" : lang === "ja" ? "シンガポール" : "Singapura",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300",
       rating: 5,
-      date: "1 Bulan yang lalu",
+      packageTaken: "Tulamben USAT Liberty Wreck",
       comment:
-        "Paket honeymoon-nya juara! Candlelight dinner di Jimbaran romantis banget dan vila di Ubud sesuai ekspektasi. Pelayanan fast respon dari admin WhatsApp. Terima kasih Prima Bali Tour!",
-      tourTaken: "Romantic Honeymoon Package",
+        lang === "en"
+          ? "As a beginner in ocean snorkeling, I felt 100% safe. Tulamben spot was amazing, the WWII shipwreck was clearly visible from the surface. The gear was clean and fresh with no bad odors. Highly recommended!"
+          : lang === "ja"
+          ? "海洋シュノーケリングの初心者ですが、100%安心して楽しめました。トゥランベンは本当に素晴らしいスポットで、第二次世界大戦の沈没船が水面から綺麗に見えました。機材も清潔で嫌な匂いもなく快適でした。とてもおすすめです！"
+          : "As a beginner in ocean snorkeling, I felt 100% safe. Spot Tulamben keren banget, bangkai kapal PD II kelihatan jelas dari permukaan. Peralatannya bersih dan wangi, gak ada bau laut bekas orang lain. Highly recommended!",
+      date:
+        lang === "en" ? "April 2026" : lang === "ja" ? "2026年4月" : "April 2026",
     },
     {
       id: "3",
-      name: "Rian Prasetya",
-      role: "Group & Corporate Trip",
-      location: "Bandung",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
+      name:
+        lang === "en"
+          ? "Handoko Family"
+          : lang === "ja"
+          ? "ハンドコ様ファミリー"
+          : "Keluarga Handoko",
+      role:
+        lang === "en"
+          ? "Family (4 Persons)"
+          : lang === "ja"
+          ? "ご家族 (4名様)"
+          : "Keluarga (4 Orang)",
+      origin:
+        lang === "en"
+          ? "Surabaya, Indonesia"
+          : lang === "ja"
+          ? "スラバヤ（インドネシア）"
+          : "Surabaya, Indonesia",
+      avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=300",
       rating: 5,
-      date: "1 Bulan yang lalu",
+      packageTaken: "Blue Lagoon & Tanjung Jepun",
       comment:
-        "Sewa HiAce untuk rombongan kantor 12 orang. Driver tepat waktu jemput di Bandara Ngurah Rai, rekomendasi tempat makan lokalnya enak-enak dan harganya bersahabat. Rekomendasi banget!",
-      tourTaken: "Sewa HiAce + Driver 3 Hari",
+        lang === "en"
+          ? "Took our 8 and 12-year-old kids for snorkeling at Blue Lagoon. Waves were very calm and fish were everywhere. The guide constantly watched over the kids. Five-star service from Prima Bali Tour!"
+          : lang === "ja"
+          ? "8歳と12歳の子どもを連れてブルーラグーンでシュノーケリングをしました。波がとても穏やかで、お魚もたくさんいました。ガイドさんが常に子どもたちに付き添ってくれたので安心でした。5つ星のサービスです！"
+          : "Ajak anak-anak umur 8 dan 12 tahun snorkeling di Blue Lagoon. Arusnya sangat tenang dan ikannya ramai banget. Guide-nya standby nemenin anak-anak terus. Pelayanan dari Prima Bali Tour bintang lima!",
+      date:
+        lang === "en" ? "June 2026" : lang === "ja" ? "2026年6月" : "Juni 2026",
     },
   ];
 
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+    );
+  };
+
+  const current = testimonials[currentIndex];
+
   return (
-    <section className="py-20 bg-slate-900 border-b border-white/10 relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
+    <section className="py-20 bg-slate-900 text-white relative overflow-hidden">
+      {/* Subtle Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 blur-[150px] rounded-full pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Header & Google Rating Summary */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
-          <div>
-            <h2 className="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-3 flex items-center gap-2">
-              <MessageSquare className="w-4 h-4" />
-              Ulasan Wisatawan
-            </h2>
-            <p className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Apa Kata Mereka Tentang Kami?
-            </p>
-          </div>
+        {/* Header Section */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-4"
+          >
+            <MessageSquare className="w-3.5 h-3.5" />
+            {lang === "en"
+              ? "Guest Reviews"
+              : lang === "ja"
+              ? "お客様の声"
+              : "Ulasan Wisatawan"}
+          </motion.div>
 
-          {/* Google Review Trust Badge */}
-          <div className="bg-slate-950 p-4 rounded-2xl border border-white/10 flex items-center gap-4 self-start shadow-xl">
-            <div className="flex flex-col items-center justify-center border-r border-white/10 pr-4">
-              <span className="text-2xl font-black text-white">4.9</span>
-              <div className="flex text-amber-400">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
-                ))}
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5 text-xs font-bold text-white mb-0.5">
-                <span>Google Reviews</span>
-                <CheckCircle2 className="w-3.5 h-3.5 text-blue-400" />
-              </div>
-              <p className="text-[11px] text-slate-400">
-                Berdasarkan <strong>500+ ulasan asli</strong> wisatawan
-              </p>
-            </div>
-          </div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl sm:text-5xl font-extrabold tracking-tight"
+          >
+            {lang === "en" ? (
+              <>
+                What Our Guests <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-400">Say About Us</span>
+              </>
+            ) : lang === "ja" ? (
+              <>
+                ツアー体験者の <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-400">リアルな声</span>
+              </>
+            ) : (
+              <>
+                Apa Kata Mereka yang <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-400">Sudah Snorkeling?</span>
+              </>
+            )}
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="mt-4 text-slate-400 text-base sm:text-lg"
+          >
+            {lang === "en"
+              ? "More than 1,200+ happy travelers have explored Bali's underwater beauty with Prima Bali Tour."
+              : lang === "ja"
+              ? "1,200名以上の旅行者がPrima Bali Tourでバリ島の美しい海を満喫しました。"
+              : "Lebih dari 1.200+ wisatawan telah menikmati keindahan bawah laut Bali bersama Prima Bali Tour."}
+          </motion.p>
         </div>
 
-        {/* Testimonials Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((item) => (
-            <div
-              key={item.id}
-              className="bg-slate-950/80 rounded-3xl border border-white/10 p-7 flex flex-col justify-between hover:border-emerald-500/40 transition-all duration-300 relative group"
-            >
-              <Quote className="w-10 h-10 text-white/5 absolute top-6 right-6 group-hover:text-emerald-500/10 transition-colors" />
+        {/* Testimonial Card Slider */}
+        <div className="max-w-4xl mx-auto">
+          <div className="relative bg-slate-950/80 border border-slate-800 rounded-3xl p-8 sm:p-12 shadow-2xl backdrop-blur-sm">
+            
+            {/* Quote Icon Accent */}
+            <Quote className="absolute top-6 right-8 w-16 h-16 text-slate-800/50 pointer-events-none" />
 
-              <div>
-                {/* Rating Stars */}
-                <div className="flex text-amber-400 gap-1 mb-4">
-                  {[...Array(item.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-amber-400" />
-                  ))}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={current.id}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4 }}
+                className="flex flex-col gap-8"
+              >
+                {/* Rating Stars & Package Badge */}
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-center gap-1">
+                    {[...Array(current.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                    {lang === "en" ? "Package:" : lang === "ja" ? "パッケージ:" : "Paket:"} {current.packageTaken}
+                  </span>
                 </div>
 
-                {/* Comment */}
-                <p className="text-slate-300 text-sm leading-relaxed mb-6 font-light italic">
-                  "{item.comment}"
+                {/* Comment Text */}
+                <p className="text-lg sm:text-2xl text-slate-200 font-light leading-relaxed italic">
+                  "{current.comment}"
                 </p>
-              </div>
 
-              {/* User Info Footer */}
-              <div className="pt-4 border-t border-white/10 flex items-center justify-between mt-auto">
-                <div className="flex items-center gap-3">
-                  <div className="relative w-11 h-11 rounded-full overflow-hidden border border-emerald-400/30">
-                    <Image
-                      src={item.avatar}
-                      alt={item.name}
-                      fill
-                      unoptimized
-                      className="object-cover"
-                    />
+                {/* User Profile */}
+                <div className="flex items-center justify-between pt-6 border-t border-slate-800/80">
+                  <div className="flex items-center gap-4">
+                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-cyan-500/50 shrink-0">
+                      <Image
+                        src={current.avatar}
+                        alt={current.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-base sm:text-lg font-bold text-white">
+                          {current.name}
+                        </h3>
+                        <CheckCircle2 className="w-4 h-4 text-cyan-400" />
+                      </div>
+                      <p className="text-xs sm:text-sm text-slate-400">
+                        {current.role} • {current.origin}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-white leading-tight">
-                      {item.name}
-                    </h3>
-                    <p className="text-[11px] text-slate-400">
-                      {item.role} • {item.location}
-                    </p>
-                  </div>
+
+                  <span className="text-xs text-slate-500 hidden sm:inline-block">
+                    {current.date}
+                  </span>
                 </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Slider Controls */}
+            <div className="flex items-center justify-between mt-8 pt-4 border-t border-slate-800/40">
+              {/* Pagination Dots */}
+              <div className="flex items-center gap-2">
+                {testimonials.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentIndex(idx)}
+                    className={`h-2.5 rounded-full transition-all duration-300 ${
+                      currentIndex === idx
+                        ? "w-8 bg-cyan-400"
+                        : "w-2.5 bg-slate-700 hover:bg-slate-600"
+                    }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
               </div>
 
-              {/* Tour Taken Tag */}
-              <div className="mt-4 pt-2">
-                <span className="inline-block text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-md">
-                  Trip: {item.tourTaken}
-                </span>
+              {/* Navigation Arrows */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handlePrev}
+                  className="p-3 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 hover:border-slate-700 transition-all active:scale-95"
+                  aria-label="Previous Testimonial"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="p-3 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 hover:border-slate-700 transition-all active:scale-95"
+                  aria-label="Next Testimonial"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
               </div>
             </div>
-          ))}
+
+          </div>
         </div>
 
       </div>

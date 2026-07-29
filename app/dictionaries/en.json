@@ -1,0 +1,26 @@
+{
+  "snorkeling": {
+    "hero": {
+      "badge": "Top Rated Bali Activity",
+      "title": "Explore Bali's Best Underwater Snorkeling Spot",
+      "subtitle": "Discover exotic coral reefs and swim alongside giant Manta Rays in Nusa Penida with professional guides.",
+      "cta": "Book via WhatsApp"
+    },
+    "features": {
+      "title": "Why Choose Our Tour?",
+      "item1_title": "All-Inclusive Gear",
+      "item1_desc": "High-quality snorkeling masks, fins, life jackets, and towel included.",
+      "item2_title": "Pro Underwater Photography",
+      "item2_desc": "Free HD photos & Go-Pro videos taken by our experienced guides.",
+      "item3_title": "Hotel Pick-up & Drop-off",
+      "item3_desc": "Hassle-free private transport from Kuta, Seminyak, Ubud, or Sanur."
+    },
+    "packages": {
+      "title": "Popular Snorkeling Packages",
+      "manta_title": "Nusa Penida Manta Ray Snorkeling",
+      "manta_price": "USD $35 / person",
+      "blue_title": "Blue Lagoon & Tanjung Jepun",
+      "blue_price": "USD $25 / person"
+    }
+  }
+}

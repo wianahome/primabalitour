@@ -5,6 +5,11 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Camera, Maximize2, X, MapPin } from "lucide-react";
 
+type GalleryProps = {
+  dict?: any;
+  lang: string;
+};
+
 interface GalleryItem {
   id: string;
   title: string;
@@ -13,66 +18,115 @@ interface GalleryItem {
   src: string;
 }
 
-const galleryData: GalleryItem[] = [
-  {
-    id: "1",
-    title: "Berenang Bersama Manta Ray",
-    location: "Manta Bay, Nusa Penida",
-    category: "nusa-penida",
-    src: "https://res.cloudinary.com/dlerwn8af/image/upload/v1785211579/snorkeling_bali_2_tupmmu.jpg",
-  },
-  {
-    id: "2",
-    title: "Terumbu Karang Warna-Warni",
-    location: "Blue Lagoon, Padangbai",
-    category: "blue-lagoon",
-    src: "https://res.cloudinary.com/dlerwn8af/image/upload/v1785211579/snorkeling_bali_ubhonm.jpg",
-  },
-  {
-    id: "3",
-    title: "Eksplorasi Bangkai Kapal PD II",
-    location: "USAT Liberty Wreck, Tulamben",
-    category: "tulamben",
-    src: "https://res.cloudinary.com/dlerwn8af/image/upload/v1785211810/tulamben_kapal_PD_vfr12r.jpg",
-  },
-  {
-    id: "4",
-    title: "Kawanan Ikan Tropis",
-    location: "Gamat Bay, Nusa Penida",
-    category: "nusa-penida",
-    src: "https://res.cloudinary.com/dlerwn8af/image/upload/v1785210320/kawanan_ikan_tropis_xakthu.jpg",
-  },
-  {
-    id: "5",
-    title: "Keindahan Air Jernih Blue Lagoon",
-    location: "Tanjung Jepun, Padangbai",
-    category: "blue-lagoon",
-    src: "https://res.cloudinary.com/dlerwn8af/image/upload/v1785211873/iar_jernih_blue_lagoon_iefmbw.jpg",
-  },
-  {
-    id: "6",
-    title: "Penyu Laut di Terumbu Karang",
-    location: "Coral Garden, Tulamben",
-    category: "tulamben",
-    src: "https://res.cloudinary.com/dlerwn8af/image/upload/v1785210320/penyu_tulamben_snorkeling_dakmdj.jpg",
-  },
-];
-
-const categories = [
-  { id: "all", label: "Semua Foto" },
-  { id: "nusa-penida", label: "Nusa Penida" },
-  { id: "blue-lagoon", label: "Blue Lagoon" },
-  { id: "tulamben", label: "Tulamben" },
-];
-
-export default function SnorkelingGallery() {
+export default function SnorkelingGallery({ dict, lang }: GalleryProps) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+
+  // Kategori Filter Multibahasa
+  const categories = [
+    {
+      id: "all",
+      label:
+        lang === "en" ? "All Photos" : lang === "ja" ? "すべての写真" : "Semua Foto",
+    },
+    { id: "nusa-penida", label: "Nusa Penida" },
+    { id: "blue-lagoon", label: "Blue Lagoon" },
+    { id: "tulamben", label: "Tulamben" },
+  ];
+
+  // Data Galeri Multibahasa (ID, EN, JA)
+  const galleryData: GalleryItem[] = [
+    {
+      id: "1",
+      title:
+        lang === "en"
+          ? "Swimming with Manta Rays"
+          : lang === "ja"
+          ? "マンタと一緒に泳ぐ"
+          : "Berenang Bersama Manta Ray",
+      location: "Manta Bay, Nusa Penida",
+      category: "nusa-penida",
+      src: "https://res.cloudinary.com/dlerwn8af/image/upload/v1785211579/snorkeling_bali_2_tupmmu.jpg",
+    },
+    {
+      id: "2",
+      title:
+        lang === "en"
+          ? "Vibrant Coral Reefs"
+          : lang === "ja"
+          ? "カラフルなサンゴ礁"
+          : "Terumbu Karang Warna-Warni",
+      location: "Blue Lagoon, Padangbai",
+      category: "blue-lagoon",
+      src: "https://res.cloudinary.com/dlerwn8af/image/upload/v1785211579/snorkeling_bali_ubhonm.jpg",
+    },
+    {
+      id: "3",
+      title:
+        lang === "en"
+          ? "WWII Shipwreck Exploration"
+          : lang === "ja"
+          ? "第二次世界大戦の沈没船探索"
+          : "Eksplorasi Bangkai Kapal PD II",
+      location: "USAT Liberty Wreck, Tulamben",
+      category: "tulamben",
+      src: "https://res.cloudinary.com/dlerwn8af/image/upload/v1785211810/tulamben_kapal_PD_vfr12r.jpg",
+    },
+    {
+      id: "4",
+      title:
+        lang === "en"
+          ? "Schools of Tropical Fish"
+          : lang === "ja"
+          ? "熱帯魚の群れ"
+          : "Kawanan Ikan Tropis",
+      location: "Gamat Bay, Nusa Penida",
+      category: "nusa-penida",
+      src: "https://res.cloudinary.com/dlerwn8af/image/upload/v1785210320/kawanan_ikan_tropis_xakthu.jpg",
+    },
+    {
+      id: "5",
+      title:
+        lang === "en"
+          ? "Crystal Clear Water"
+          : lang === "ja"
+          ? "ブルーラグーンの透明な海"
+          : "Keindahan Air Jernih Blue Lagoon",
+      location: "Tanjung Jepun, Padangbai",
+      category: "blue-lagoon",
+      src: "https://res.cloudinary.com/dlerwn8af/image/upload/v1785211873/iar_jernih_blue_lagoon_iefmbw.jpg",
+    },
+    {
+      id: "6",
+      title:
+        lang === "en"
+          ? "Sea Turtles at Coral Garden"
+          : lang === "ja"
+          ? "サンゴ礁のウミガメ"
+          : "Penyu Laut di Terumbu Karang",
+      location: "Coral Garden, Tulamben",
+      category: "tulamben",
+      src: "https://res.cloudinary.com/dlerwn8af/image/upload/v1785210320/penyu_tulamben_snorkeling_dakmdj.jpg",
+    },
+  ];
 
   const filteredItems =
     activeCategory === "all"
       ? galleryData
       : galleryData.filter((item) => item.category === activeCategory);
+
+  // Handler Kontak WhatsApp Dinamis dari Lightbox Modal
+  const handleInquireSpot = (item: GalleryItem) => {
+    let text = `Halo, saya tertarik dengan lokasi snorkeling di *${item.location}* (${item.title})`;
+
+    if (lang === "en") {
+      text = `Hello, I am interested in this snorkeling spot: *${item.location}* (${item.title})`;
+    } else if (lang === "ja") {
+      text = `こんにちは、このシュノーケリングスポットに興味があります: *${item.location}* (${item.title})`;
+    }
+
+    window.open(`https://wa.me/6282339616319?text=${encodeURIComponent(text)}`, "_blank");
+  };
 
   return (
     <section id="galeri" className="py-20 bg-slate-900 text-white relative">
@@ -87,7 +141,11 @@ export default function SnorkelingGallery() {
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-4"
           >
             <Camera className="w-3.5 h-3.5" />
-            Dokumentasi Wisatawan
+            {lang === "en"
+              ? "Guest Documentation"
+              : lang === "ja"
+              ? "ツアーの様子・ギャラリー"
+              : "Dokumentasi Wisatawan"}
           </motion.div>
 
           <motion.h2
@@ -97,7 +155,19 @@ export default function SnorkelingGallery() {
             transition={{ delay: 0.1 }}
             className="text-3xl sm:text-5xl font-extrabold tracking-tight"
           >
-            Galeri <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-400">Bawah Laut</span>
+            {lang === "en" ? (
+              <>
+                Underwater <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-400">Gallery</span>
+              </>
+            ) : lang === "ja" ? (
+              <>
+                水中 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-400">フォトギャラリー</span>
+              </>
+            ) : (
+              <>
+                Galeri <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-400">Bawah Laut</span>
+              </>
+            )}
           </motion.h2>
 
           <motion.p
@@ -107,7 +177,11 @@ export default function SnorkelingGallery() {
             transition={{ delay: 0.2 }}
             className="mt-4 text-slate-400 text-base sm:text-lg"
           >
-            Intip keseruan dan momen indahnya pemandangan bawah laut Bali yang diabadikan langsung oleh peserta tour kami.
+            {lang === "en"
+              ? "Take a peak at the beautiful underwater moments captured directly by our tour guests in Bali."
+              : lang === "ja"
+              ? "バリ島の美しい海で撮影されたお客様の素晴らしい水中ショットをご覧ください。"
+              : "Intip keseruan dan momen indahnya pemandangan bawah laut Bali yang diabadikan langsung oleh peserta tour kami."}
           </motion.p>
         </div>
 
@@ -228,13 +302,14 @@ export default function SnorkelingGallery() {
                     </p>
                   </div>
                   <button
-                    onClick={() => {
-                      const text = `Halo, saya tertarik dengan lokasi snorkeling di *${selectedImage.location}* (${selectedImage.title})`;
-                      window.open(`https://wa.me/6282339616319?text=${encodeURIComponent(text)}`, "_blank");
-                    }}
-                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold hover:from-cyan-400 hover:to-teal-400 transition-all text-sm shadow-md"
+                    onClick={() => handleInquireSpot(selectedImage)}
+                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold hover:from-cyan-400 hover:to-teal-400 transition-all text-sm shadow-md shrink-0"
                   >
-                    Tanyakan Spot Ini
+                    {lang === "en"
+                      ? "Inquire About This Spot"
+                      : lang === "ja"
+                      ? "このスポットについて尋ねる"
+                      : "Tanyakan Spot Ini"}
                   </button>
                 </div>
               </motion.div>
