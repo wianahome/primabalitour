@@ -1,13 +1,13 @@
 import { Metadata } from "next";
 import { getDictionary } from "@/lib/dictionaries";
 import HeroSnorkeling from "./HeroSnorkeling";
-import PaketSnorkeling from "./PaketSnorkeling";
 import SnorkelingGallery from "./SnorkelingGallery";
 import WhyKami from "./WhyKami";
 import SnorkelingTestimonials from "./SnorkelingTestimoni";
 import SnorkelingFAQ from "./SnorkelingFaq";
 import WhatsAppButton from "@/app/komponen/WhatsAppButton";
 import SnorkelingSpots from "./SnorkelingSpot";
+
 
 type PageProps = {
   params: Promise<{ lang: "id" | "en" | "ja" }>;

@@ -2,8 +2,9 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import Navbar from "./Navbar"; // Sesuaikan path jika berbeda
+
 import Footer from "./Footer"; // Sesuaikan path jika berbeda
+import Navbar1 from "./Navbar1";
 
 export default function ClientLayoutWrapper({
   children,
@@ -15,7 +16,7 @@ export default function ClientLayoutWrapper({
 
   return (
     <>
-      {!isAdmin && <Navbar />}
+      {!isAdmin && <Navbar1 />}
       <main>{children}</main>
       {!isAdmin && <Footer />}
     </>
